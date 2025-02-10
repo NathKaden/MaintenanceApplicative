@@ -31,10 +31,8 @@ public class Customer {
             double thisAmount = 0;
             Rental each = (Rental) rentals.nextElement();
             //determine amounts for each line
-            thisAmount = amountForCurrentRental(each);
-            
             // Il faut demander à rentals le prix
-            
+            thisAmount = each.getCharge();
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
@@ -50,10 +48,6 @@ public class Customer {
         result += "You earned " + String.valueOf(frequentRenterPoints) +
                 " frequent renter points";
         return result;
-    }
-
-    private static double amountForCurrentRental(Rental each) {
-        return each.getCharge();
     }
 
 
