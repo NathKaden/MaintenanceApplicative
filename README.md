@@ -8,5 +8,7 @@ On a trois classes :
 customer, rental et movie
 
 Dans la méthode Customer::statement, la portion de code du while indiquée par des flèches indique un switch : 
-    Ce switch/case indique si le prix du film est normal, nouveau ou childrens
+    Ce switch/case indique si le prix du film est normal, nouveau ou childrens.
 Une fois la méthode extraite, on enlève les paramètres inutiles, et on initialise cette variable locale dans la méthode.
+
+Le diagramme uml mis à jour est mis directement dans le dossier du projet.
