@@ -20,27 +20,42 @@ public class Customer {
         return _name;
     }
 
-    public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
+    private double getTotalAmount(Enumeration rentals) {
+        double totalamount = 0;
 
+        while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+
+            totalamount += each.getCharge();
+        }
+        return totalamount;
+    }
+
+    public int getFrequentRentalPoints(Enumeration rentals) {
+        int frequentrentalpoints = 0;
+
+        while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+
+            frequentrentalpoints++;
+            frequentrentalpoints = getFrequentRenterPoints(each, frequentrentalpoints);
+        }
+        return frequentrentalpoints;
+    }
+
+    public String statement() {
         Enumeration rentals = _rentals.elements();
 
         String result = "Record for " + getName() + "\n";
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            // add frequent renter points
-            frequentRenterPoints++;
-            frequentRenterPoints = getFrequentRenterPoints(each, frequentRenterPoints);
-            //show figures for this rental
+            // show figures for this rental
             result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
-            totalAmount += each.getCharge();
         }
 
-        //add footer lines
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) +
-                " frequent renter points";
+        // add footer lines
+        result += "Amount owed is " + String.valueOf(getTotalAmount(rentals)) + "\n";
+        result += "You earned " + String.valueOf(getFrequentRentalPoints(rentals)) + " frequent renter points";
         return result;
     }
 
@@ -50,6 +65,4 @@ public class Customer {
                 each.getDaysRented() > 1) frequentRenterPoints++;
         return frequentRenterPoints;
     }
-
-
 }
