@@ -1,7 +1,6 @@
 package fr.r6a06;
 
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import static junit.framework.Assert.assertEquals;
