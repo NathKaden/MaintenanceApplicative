@@ -1,49 +1,45 @@
 package fr.r6a06;
 
 public class Movie {
-    public static final int  CHILDRENS = 2;
-    public static final int  REGULAR = 0;
-    public static final int  NEW_RELEASE = 1;
+    public static final int CHILDRENS = 2;
+    public static final int REGULAR = 0;
+    public static final int NEW_RELEASE = 1;
 
     private String _title;
-    private int _priceCode;
+    private Price _price;
 
     public Movie(String title, int priceCode) {
         _title = title;
-        _priceCode = priceCode;
+        this.setPriceCode(priceCode);
     }
-    public int getPriceCode() {
-        return _priceCode;
-    }
-    public void setPriceCode(int arg) {
-        _priceCode = arg;
-    }
-    public String getTitle (){
+
+    public String getTitle(){
         return _title;
     };
 
-    public double getCharge(Rental rental) {
-        double result = 0.0;
-        switch (rental.getMovie().getPriceCode()) {
-            case REGULAR:
-                result += 2;
-                if (rental.getDaysRented() > 2)
-                    result += (rental.getDaysRented() - 2) * 1.5;
-                break;
-            case NEW_RELEASE:
-                result += rental.getDaysRented() * 3;
-                break;
-            case CHILDRENS:
-                result += 1.5;
-                if (rental.getDaysRented() > 3)
-                    result += (rental.getDaysRented() - 3) * 1.5;
-                break;
-        }
-        return result;
+    public Price getPriceCode() {
+        return _price;
     }
 
-    public int getFrequentRenterPoints(Rental rental) {
-        if ((rental.getMovie().getPriceCode() == NEW_RELEASE) &&
+    public void setPriceCode(int priceCode) {
+        switch (priceCode){
+            case REGULAR:
+                this._price = new RegularPrice(this._price.getPriceCode());
+                break;
+            case NEW_RELEASE:
+                this._price = new NewReleasePrice(this._price.getPriceCode());
+                break;
+            case CHILDRENS:
+                this._price = new ChildrensPrice(this._price.getPriceCode());
+        }
+    }
+
+    public double getCharge(Rental rental) {
+        return this._price.getPriceCode();
+    }
+
+    public int getRenterPoints(Rental rental) {
+        if ((this._price.getPriceCode() == NEW_RELEASE) &&
                 rental.getDaysRented() > 1)
             return 2;
         else
